@@ -212,6 +212,11 @@ def monitor_config_add_config(duthost, get_valid_acl_ports):
 def test_monitor_config_tc1_suite(rand_selected_dut, get_valid_acl_ports):
     """ Test enable/disable EverflowAlwaysOn config
     """
+
+    asic_name = rand_selected_dut.get_asic_name()
+    if asic_name in ['th4', 'th5']:
+        pytest.skip("Skip test for BUG807858, BUG820899 and BUG950051")
+
     # Step 1: Create checkpoint at initial state where no monitor config exist
     bgp_monitor_config_cleanup(rand_selected_dut)
     create_checkpoint(rand_selected_dut, MONITOR_CONFIG_INITIAL_CP)
